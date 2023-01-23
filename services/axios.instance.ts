@@ -9,7 +9,7 @@ axiosInstance.interceptors.request.use((config) => {
   config.headers = {
     "Content-Type": "application/json",
     authorization: token || "",
-    "ngrok-skip-browser-warning": "skip-browser-warning",
+    // "ngrok-skip-browser-warning": "skip-browser-warning",
   };
   return config;
 });
