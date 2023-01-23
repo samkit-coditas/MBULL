@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import { MySwipeableDrawer } from "./swipeableDrawer.styles";
+import { ISwipeableDrawerProps } from "./swipeableDrawer.types";
 const drawerBleeding = 56;
 const Puller = styled(Box)(({ theme }) => ({
   width: 30,
@@ -14,13 +15,17 @@ const Puller = styled(Box)(({ theme }) => ({
   top: 8,
   left: "calc(50% - 15px)",
 }));
-export default function SwipeableEdgeDrawer(props: any) {
+export default function SwipeableEdgeDrawer({
+  open,
+  toggleDrawer,
+  children,
+}: ISwipeableDrawerProps) {
   return (
     <MySwipeableDrawer
       anchor="bottom"
-      open={props.open}
-      onClose={props.toggleDrawer(false)}
-      onOpen={props.toggleDrawer(true)}
+      open={open}
+      onClose={toggleDrawer(false)}
+      onOpen={toggleDrawer(true)}
       swipeAreaWidth={drawerBleeding}
       disableSwipeToOpen={false}
       ModalProps={{
@@ -28,7 +33,7 @@ export default function SwipeableEdgeDrawer(props: any) {
       }}
     >
       <Puller />
-      {props.children}
+      {children}
     </MySwipeableDrawer>
   );
 }

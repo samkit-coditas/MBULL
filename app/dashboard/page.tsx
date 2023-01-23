@@ -154,7 +154,6 @@ const Dashboard = () => {
   const toggleDrawer = (newOpen: boolean) => () => {
     dispatch({ type: "TOGGLE_DRAWER", payload: newOpen });
   };
-
   const updateSelectedStock = async (data: any) => {
     dispatch({ type: "UPDATE_SELECTED_STOCK_DATA", payload: data });
     dispatch({
