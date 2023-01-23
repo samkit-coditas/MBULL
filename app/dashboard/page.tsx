@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useReducer } from "react";
 import { debounce } from "lodash";
-
+import { useWindowWidth } from "@react-hook/window-size";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -22,7 +22,7 @@ import { LanguageContext } from "../../hoc/languageProvider";
 import { getStockChart, getStockList } from "../../services/user.service";
 
 import { MainContainer } from "./dashboard.style";
-import useWindowWidth from "../../customHooks/useWindowWidth";
+
 import { dashboardInitialState, dashboardReducer } from "./dashboard.reducer";
 
 const Dashboard = () => {
