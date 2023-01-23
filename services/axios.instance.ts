@@ -6,11 +6,13 @@ const axiosInstance = axios.create({
 });
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
-  config.headers = {
+  const temp: any = {
+    ...config.headers,
     "Content-Type": "application/json",
     authorization: token || "",
-    // "ngrok-skip-browser-warning": "skip-browser-warning",
+    "ngrok-skip-browser-warning": "skip-browser-warning",
   };
+  config.headers = temp;
   return config;
 });
 axiosInstance.interceptors.response.use(
