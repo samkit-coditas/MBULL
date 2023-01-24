@@ -5,9 +5,8 @@ export const MainContainer = styled("div")(
   positon:fixed;
   .menuItem{
     display:flex;
-
     gap:0.5rem;
-    font-size:large;
+    font-size:medium;
   }
   .menu{
     background-color: ${theme.palette.primary.light};
