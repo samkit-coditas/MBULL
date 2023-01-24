@@ -282,10 +282,11 @@ const Dashboard = () => {
             </>
           ) : (
             <Box className="stockReportEmpty">
-              <h2>
+              <img src="./Empty State.png" />
+              <h4>
                 "No data available for the selected stock/filters. Please try
                 again with different criteria."
-              </h2>
+              </h4>
             </Box>
           )
         ) : (
