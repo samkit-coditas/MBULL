@@ -11,6 +11,12 @@ export const MainContainer = styled("div")(
             display: flex;
             gap:0.5rem;
             padding:0.5rem 0;
+            .positiveDayChange{
+              color: #00ff00;
+            }
+            .negativeDayChange{
+              color: #ff0000;
+            }
           }
       }
   

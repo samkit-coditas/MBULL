@@ -19,9 +19,6 @@ const SortMenu: FC<SortMenuProps> = (props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [clear, setClear] = useState(false);
 
-  // const isApplyButtonActive = Object.values(sortCriteria).filter(x => x != null).length > 0;
-  // console.log(Object.values(sortCriteria).filter(x => x != null).length)
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };

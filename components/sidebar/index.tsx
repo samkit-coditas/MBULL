@@ -65,12 +65,9 @@ const SidebarItem = (props: any) => {
       <Link href={props.href} className="link">
         <ListItemButton className={isActive ? "active" : ""}>
           <ListItemIcon>
-            <Icon className={isActive ? "active" : "icon"} />
+            <Icon className={"icon"} />
           </ListItemIcon>
-          <ListItemText
-            primary={title}
-            className={isActive ? "active" : "listItemText"}
-          />
+          <ListItemText primary={title} className={"listItemText"} />
         </ListItemButton>
       </Link>
       <Divider />

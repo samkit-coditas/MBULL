@@ -17,14 +17,14 @@ export const MainContainer = styled("div")(
   }
   .link {
     text-decoration: none;
-  }
-  .active{
-    color: black;
-  } 
-  .icon{
-    color: ${theme.palette.secondary.main};
-  }
-  .listItemText{
+}
+.active{
+    background-color:${theme.palette.secondary.light};
+} 
+.icon{
+  color: black;
+}
+.listItemText{
     color: ${theme.palette.secondary.main}
   }
     `

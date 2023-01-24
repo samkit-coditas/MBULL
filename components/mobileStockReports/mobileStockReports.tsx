@@ -7,19 +7,26 @@ import { MainContainer } from "./mobileStockReports.style"
 
 
 const MobileStockReports = ({ data }: any) => {
+    const { companyName, lastTradedPrice, dayChange } = data
+
+    const isDayChangePositive = dayChange > 0;
+
     return (<>
         <MainContainer>
             <Box className="stockReportsMobileView">
                 <Box className='header'>
                     <Typography component='h1' variant='h3'>
-                        {data.companyName}
+                        {companyName}
                     </Typography>
                     <Box className='stockSnapShot'>
                         <Typography component='h1' variant='h5'>
-                            {data.lastTradedPrice}
+                            {lastTradedPrice}
                         </Typography>
-                        <Typography component='h1' variant='h5'>
-                            {data.dayChange}
+                        <Typography
+                            component='h1'
+                            variant='h5'
+                            className={isDayChangePositive ? "positiveDayChange" : "negativeDayChange"}>
+                            {dayChange}
                         </Typography>
                     </Box>
                 </Box>

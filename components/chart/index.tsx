@@ -1,4 +1,4 @@
-import { useContext, useReducer, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -16,7 +16,6 @@ import Button from "@mui/material/Button";
 
 import { MainContainer } from "./chart.style";
 import { LanguageContext } from "../../hoc/languageProvider";
-import { dashboardInitialState, dashboardReducer } from "../../app/dashboard/dashboard.reducer";
 
 ChartJS.register(
   CategoryScale,
@@ -34,17 +33,14 @@ interface ChartProps {
       createdAt: string;
       lastTradedPrice: number;
     }[];
-    companyName: string;
+    nseCode: string,
   },
-  companyName: string,
   setFilterCallback: (filter: string) => void
 }
 
-const Chart = ({ data, companyName, setFilterCallback }: ChartProps) => {
-  console.log(data)
+const Chart = ({ data, setFilterCallback }: ChartProps) => {
   const [selectedFilter, setSelectedFilter] = useState<null | string>(null)
   const { localString } = useContext(LanguageContext);
-
   const yAxis: number[] = [];
   const labels: string[] = [];
 
@@ -59,7 +55,7 @@ const Chart = ({ data, companyName, setFilterCallback }: ChartProps) => {
 
   const datasets: any[] = [
     {
-      label: companyName,
+      label: data?.nseCode,
       data: yAxis,
       backgroundColor: "#2196F3",
       borderColor: "#1d8fb1",
@@ -79,6 +75,10 @@ const Chart = ({ data, companyName, setFilterCallback }: ChartProps) => {
   }
 
   const stockChartFilterOptions = ['1day', '5day', '1month', '3month', "6month", "1year", "Max"]
+  useEffect(() => {
+    setSelectedFilter("");
+    setFilterCallback("")
+  }, [data?.nseCode])
 
   return (
     <MainContainer>

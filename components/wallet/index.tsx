@@ -59,13 +59,9 @@ const Wallet = () => {
           >
             {localString["add funds"]}
           </Button>
-          <Button variant="contained" className="fundActions">
-            {localString["withdraw"]}
-          </Button>
         </Box>
       </Box>
     </MainContainer>
   );
 };
-
 export default Wallet;

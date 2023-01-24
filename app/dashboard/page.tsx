@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useReducer } from "react";
 import { debounce } from "lodash";
-import { useWindowWidth } from "@react-hook/window-size";
+
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -22,8 +22,8 @@ import { LanguageContext } from "../../hoc/languageProvider";
 import { getStockChart, getStockList } from "../../services/user.service";
 
 import { MainContainer } from "./dashboard.style";
-
 import { dashboardInitialState, dashboardReducer } from "./dashboard.reducer";
+import { useWindowWidth } from "@react-hook/window-size";
 
 const Dashboard = () => {
   const [state, dispatch] = useReducer(dashboardReducer, dashboardInitialState);
@@ -35,8 +35,6 @@ const Dashboard = () => {
     selectedStockData,
     data,
     isDrawerOpen,
-    companyName,
-    searchTerm,
   } = state;
 
   const { localString } = useContext(LanguageContext);
@@ -124,7 +122,10 @@ const Dashboard = () => {
       );
       if (response) {
         dispatch({ type: "SET_DATA", payload: response });
-        dispatch({ type: "UPDATE_SELECTED_STOCK_DATA", payload: {} });
+        dispatch({
+          type: "UPDATE_SELECTED_STOCK_DATA",
+          payload: response.stocks[0],
+        });
       }
       closeSortMenuCallBack();
     } catch (error) {
@@ -141,6 +142,10 @@ const Dashboard = () => {
       const response = await getStockList(pageNumber);
       if (response) {
         dispatch({ type: "SET_DATA", payload: response });
+        dispatch({
+          type: "UPDATE_SELECTED_STOCK_DATA",
+          payload: response.stocks[0],
+        });
       }
     } catch (error) {
       console.log(error);
@@ -154,6 +159,7 @@ const Dashboard = () => {
   const toggleDrawer = (newOpen: boolean) => () => {
     dispatch({ type: "TOGGLE_DRAWER", payload: newOpen });
   };
+
   const updateSelectedStock = async (data: any) => {
     dispatch({ type: "UPDATE_SELECTED_STOCK_DATA", payload: data });
     dispatch({
@@ -207,6 +213,7 @@ const Dashboard = () => {
       dispatch({ type: "SET_INTERVAL", payload: [...myInterval, intervalId] });
     }
   }, [chartData]);
+
   return (
     <MainContainer>
       <Box className="stockListContainer">
@@ -231,7 +238,7 @@ const Dashboard = () => {
                   />
                 );
               })
-            : Array(5)
+            : Array(10)
                 .fill(0)
                 .map((item, i) => (
                   <StockCardSkeleton key={`stockCardSkeleton:${i}`} />
@@ -247,12 +254,11 @@ const Dashboard = () => {
         </Typography>
 
         {Object.keys(data).length > 0 ? (
-          Object.keys(selectedStockData).length > 0 ? (
+          chartData && chartData?.lastTradedPrice?.length > 1 ? (
             <>
               <Box className="dashboardStockChartContainer">
                 <Chart
                   data={chartData}
-                  companyName={companyName}
                   setFilterCallback={updateChartDataFilter}
                 />
               </Box>
@@ -267,7 +273,7 @@ const Dashboard = () => {
                         key={x.title}
                       >
                         <p className="stockInformationItemsTitle">{x.title}</p>
-                        <p>{x.value}</p>
+                        <p className="stockInformationItemsValue">{x.value}</p>
                       </Grid>
                     );
                   })}
@@ -276,8 +282,10 @@ const Dashboard = () => {
             </>
           ) : (
             <Box className="stockReportEmpty">
-              <img src="./Empty State.png" />
-              <h3>No stock selected, please select a stock to view reports</h3>
+              <h2>
+                "No data available for the selected stock/filters. Please try
+                again with different criteria."
+              </h2>
             </Box>
           )
         ) : (
@@ -305,11 +313,7 @@ const Dashboard = () => {
 
       <SwipeableEdgeDrawer open={isDrawerOpen} toggleDrawer={toggleDrawer}>
         <MobileStockReports data={selectedStockData} />
-        <Chart
-          data={chartData}
-          companyName={companyName}
-          setFilterCallback={updateChartDataFilter}
-        />
+        <Chart data={chartData} setFilterCallback={updateChartDataFilter} />
         <Box className="stockInformationContainer">
           {stockInformationItems.map((x, i) => {
             return (

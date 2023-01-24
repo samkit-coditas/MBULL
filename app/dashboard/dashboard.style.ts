@@ -73,6 +73,10 @@ export const MainContainer = styled("div")(
                 font-size: 0.75rem;
                 color:#bdbdbd;
               }
+              .stockInformationItemsValue{
+                font-size:1rem;
+                font-weight: 300;
+              }
           };
         };
 

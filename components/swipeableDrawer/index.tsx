@@ -1,11 +1,16 @@
 "use client";
+
 import * as React from "react";
+
 import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import Box from "@mui/material/Box";
+
 import { MySwipeableDrawer } from "./swipeableDrawer.styles";
-import { ISwipeableDrawerProps } from "./swipeableDrawer.types";
+import { ISwipeableDrawerProps } from "./swipeableDrawer.type";
+
 const drawerBleeding = 56;
+
 const Puller = styled(Box)(({ theme }) => ({
   width: 30,
   height: 6,
@@ -15,6 +20,7 @@ const Puller = styled(Box)(({ theme }) => ({
   top: 8,
   left: "calc(50% - 15px)",
 }));
+
 export default function SwipeableEdgeDrawer({
   open,
   toggleDrawer,
