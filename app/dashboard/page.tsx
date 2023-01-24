@@ -209,7 +209,7 @@ const Dashboard = () => {
     if (Object.keys(selectedStockData).length > 0) {
       let intervalId = setInterval(() => {
         fetchSelectedStockGraph();
-      }, 100000);
+      }, 10000);
       dispatch({ type: "SET_INTERVAL", payload: [...myInterval, intervalId] });
     }
   }, [chartData]);
