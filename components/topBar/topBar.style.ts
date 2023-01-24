@@ -17,7 +17,7 @@ export const MainContainer = styled("div")(
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:1rem;
+    gap:0.5rem;
     cursor:pointer;
     margin-left: 20px;
   }
