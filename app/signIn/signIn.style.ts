@@ -6,7 +6,6 @@ export const MainContainer = styled("div")(
     justify-content: center;
     align-items:center;
     height: 100vh;
-    background-image: url("/Background.png");
 
       .formContainer {
         display: flex;
