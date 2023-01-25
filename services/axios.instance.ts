@@ -22,11 +22,7 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const token = localStorage.getItem("accessToken");
-    if (
-      error?.response?.status == 401 &&
-      token != undefined &&
-      token !== null
-    ) {
+    if (error?.response?.status == 401 && token != undefined && token != null) {
       originalRequest._retry = true;
       const res = await getNewAccesToken();
       localStorage.setItem("accessToken", JSON.stringify(res.data));

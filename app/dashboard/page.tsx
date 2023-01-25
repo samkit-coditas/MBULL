@@ -208,7 +208,10 @@ const Dashboard = () => {
   useEffect(() => {
     if (Object.keys(selectedStockData).length > 0) {
       let intervalId = setInterval(() => {
-        fetchSelectedStockGraph();
+        const token = localStorage.getItem("accessToken");
+        if (token != undefined && token != null) {
+          fetchSelectedStockGraph();
+        }
       }, 10000);
       dispatch({ type: "SET_INTERVAL", payload: [...myInterval, intervalId] });
     }
