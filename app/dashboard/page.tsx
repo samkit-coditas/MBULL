@@ -213,7 +213,15 @@ const Dashboard = () => {
       dispatch({ type: "SET_INTERVAL", payload: [...myInterval, intervalId] });
     }
   }, [chartData]);
-
+  useEffect(() => {
+    return () => {
+      if (myInterval.length > 0) {
+        myInterval.map((interval: NodeJS.Timer) => {
+          clearInterval(interval);
+        });
+      }
+    };
+  }, []);
   return (
     <MainContainer>
       <Box className="stockListContainer">
