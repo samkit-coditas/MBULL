@@ -19,8 +19,8 @@ import Paper from "@mui/material/Paper";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import Input from "../../components/input";
 
@@ -33,10 +33,10 @@ import { ToasterContext } from "../../hoc/toasterProvider";
 
 import { signIn } from "../../services/auth.services";
 
-
 const SignIn = () => {
   const [captchaToken, setCaptchaToken] = useState("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const signInContext = useContext(SignInContext);
   const { localString } = useContext(LanguageContext);
@@ -71,6 +71,7 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<ISignInInputs> = async (data) => {
     try {
+      setShowLoader(true);
       const token = captchaRef.current?.getValue();
       setCaptchaToken(token as string);
       captchaRef.current?.reset();
@@ -86,6 +87,7 @@ const SignIn = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         showToaster("Sign In Successfull!!!");
+        setShowLoader(false);
         navigateTo("/dashboard");
 
         signInContext.onSignIn();
@@ -96,8 +98,10 @@ const SignIn = () => {
       });
     } catch (e: any) {
       if (e.response) {
+        setShowLoader(false);
         showToaster(e?.response?.data.error.message);
       } else {
+        setShowLoader(false);
         showToaster(e.message);
       }
     }
@@ -109,10 +113,8 @@ const SignIn = () => {
   };
 
   const togglePasswordVisibility = () => {
-    setIsPasswordVisible((isPasswordVisible) => !isPasswordVisible)
-  }
-
-
+    setIsPasswordVisible((isPasswordVisible) => !isPasswordVisible);
+  };
 
   return (
     <MainContainer>
@@ -126,32 +128,25 @@ const SignIn = () => {
         <Box>
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
-
               <Input name="email" fullWidth />
 
               <Input
                 name="password"
                 type={isPasswordVisible ? "text" : "password"}
                 fullWidth
-
-                InputProps={
-                  {
-                    endAdornment: (
-                      <InputAdornment position="end">
-
-                        <IconButton onClick={togglePasswordVisibility}>
-                          {
-                            isPasswordVisible ?
-                              <VisibilityOffIcon />
-                              :
-                              <VisibilityIcon />
-                          }
-                        </IconButton>
-
-                      </InputAdornment>
-                    ),
-                  }
-                }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={togglePasswordVisibility}>
+                        {isPasswordVisible ? (
+                          <VisibilityOffIcon />
+                        ) : (
+                          <VisibilityIcon />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <Box className="recaptchaContainer">
@@ -185,6 +180,16 @@ const SignIn = () => {
           </div>
         </Box>
       </Paper>
+      {showLoader && (
+        <div className="login-loader">
+          <div className="lds-ellipsis">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
     </MainContainer>
   );
 };
