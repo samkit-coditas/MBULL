@@ -11,6 +11,7 @@ canvas {
   max-height: 100%;
   aspect-ratio: auto !important;
 }
+
 .login-loader {
   width: 100%;
   height: 100%;
